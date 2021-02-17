@@ -2,7 +2,8 @@
 ___
 This is the page of CRM, a resource monitor I've been working on, it doesn't have much features yet, I hope it doesn't end like the rest of repos in my account.
 
-My idea for this script is doing something similar to htop, but without the process list, just a few numbers and sliders that tell you how much of your system's recources you've been using. In short, a resource monitor aligned with the UNIX 
+My idea for this script is doing something similar to htop, but without the process list, just a few numbers and sliders that tell you how much of your system's recources you've been using. In short, a resource monitor aligned with the UNIX philosophy (sort of).
+
 Things that CRM does:
 * Show CPU frequency
 * Show CPU utilization percentage
