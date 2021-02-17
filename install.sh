@@ -1,4 +1,5 @@
 #!/bin/sh
+pip install psutil termcolor
 cp monitor.py crm
 sudo chmod +x crm
 cp crm ~/.local/bin/
