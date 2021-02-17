@@ -1,5 +1,6 @@
-#/bin/python
+#!/bin/python
 import psutil, os, time, termcolor, config
+
 class printer:
 	def printBar(current : float):
 		print('[',end="")
@@ -40,7 +41,7 @@ class Memory:
 		self.used = None
 		self.percentage = None
 	def update(self):
-		GB = 1000 ** 3
+		GB = 1024 ** 3
 		mem = psutil.virtual_memory()
 		self.total = mem[0]/GB
 		self.percentage = mem[2]
@@ -93,6 +94,7 @@ class Monitor:
 				self.update()
 				self.printData()
 		except KeyboardInterrupt:
+			print("\nGoodbye!")
 			pass
 def main():
 	monitor = Monitor()
