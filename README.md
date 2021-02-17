@@ -1,2 +1,1 @@
-# CRM
-Crappy Resource Monitor
+# **C**rappy **R**resource **M**Monitor
