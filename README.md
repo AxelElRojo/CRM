@@ -2,7 +2,7 @@
 ___
 This is the page of CRM, a resource monitor I've been working on, it doesn't have much features yet, I hope it doesn't end like the rest of repos in my account.
 
-My idea for this script is doing something similar to htop, but without the process list, just a few numbers and sliders that tell you how much of your system's recources you've been using. In short, a resource monitor aligned with the UNIX philosophy (sort of).
+My idea for this script is doing something similar to htop, but without the process list, just a few numbers and bars that tell you how much of your system's resources you've been using. In short, a resource monitor (sort of) aligned with the UNIX philosophy.
 
 Things that CRM does:
 * Show CPU frequency.
@@ -17,7 +17,6 @@ Things that CRM does **not** do:
 * Show GPU data.
 * Work on Windows.
 * Show each process.
-
 ## Sounds craptastic! How do I join?
 ___
 To install it simply run this:
