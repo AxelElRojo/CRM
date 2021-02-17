@@ -17,3 +17,11 @@ Things that CRM does **not** do:
 * Show GPU data.
 * Work on Windows.
 * Show each process
+
+To install it simply run this:
+```shell
+git clone https://github.com/AxelElRojo/CRM/
+cd CRM/
+sudo chmod +x install.sh && ./install.sh
+```
+The script will ask you if you want to delete the cloned folder, if you say yes, it should be deleted automatically and then send you to your ~/ .
