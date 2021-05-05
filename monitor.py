@@ -9,26 +9,29 @@
 # warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
 # more details.
 
-# You should have received a copy of the GNU General Public License along with CRM.  If not, see
+# You should have received a copy of the GNU General Public License along with CRM. If not, see
 # <https://www.gnu.org/licenses/>.
 import psutil, os, time, termcolor, config
 
-class printer:
-	def printBar(current : float):
-		print('[',end="")
-		for i in range (100):
+class Formater:
+	def createBar(current : float):
+		bar = '[';
+		for i in range(100):
 			if i < current:
-				print(termcolor.colored(config.bar["char"],config.bar["usedColor"]),end="")
+				bar += termcolor.colored(config.bar["char"],config.bar["usedColor"])
 			else:
-				print(termcolor.colored(config.bar["char"],config.bar["freeColor"]),end="")
-		print("] " + str(current) + "%")
-	def printBold(printed : str):
-		print("\033[1m" + printed + "\033[0m")
-	def centerText(string : str):
+				bar += termcolor.colored(config.bar["char"],config.bar["freeColor"])
+		bar += "]" + str(current) + "%"
+		return bar
+	def boldText(printed : str):
+		return "\033[1m" + printed + "\033[0m"
+	
+	def centerText(parameterString : str):
 		rows, columns = os.popen('stty size', 'r').read().split()
-		return string.center(int(columns),config.fillChar)
-	def printBoldCentered(printed : str):
-		printer.printBold(printer.centerText(printed))
+		return parameterString.center(int(columns), config.fillChar)
+	
+	def boldCentered(printed : str):
+		return Formater.boldText(Formater.centerText(printed))
 
 class CPU:
 	def __init__(self):
@@ -40,12 +43,12 @@ class CPU:
 		self.percentage = psutil.cpu_percent()
 		self.processes = len(psutil.pids())
 	def printData(self):
-		if config.titles:
-			printer.printBoldCentered("CPU")
-		print(str(self.frequency) + " Ghz")
-		if(config.CPU_BAR):
-			printer.printBar(self.percentage)
-		print(str(self.processes) + " Processes")
+		data = Formater.boldCentered("CPU") if config.titles else ""
+		data += str(self.frequency) + " Ghz\n"
+		if config.CPU_BAR:
+			data += Formater.createBar(self.percentage)
+		data += "\n" + str(self.processes) + " Processes\n"
+		return data
 
 class Memory:
 	def __init__(self):
@@ -59,11 +62,11 @@ class Memory:
 		self.percentage = mem[2]
 		self.used = mem[3]/GB
 	def printData(self):
-		if config.titles:
-			printer.printBoldCentered("Memory")
-		print(str(round(self.used,2))+'GB/'+str(round(self.total,2))+'GB')
+		data = Formater.boldCentered("Memory") if config.titles else ""
+		data += str(round(self.used,2))+'GB/'+str(round(self.total,2)) + "GB\n"
 		if(config.MEM_BAR):
-			printer.printBar(self.percentage)
+			data += Formater.createBar(self.percentage)
+		return data
 
 class Temperature:
 	def __init__(self):
@@ -74,12 +77,14 @@ class Temperature:
 		self.max = temp[3]
 		self.current = temp[1]
 	def printData(self):
+		data = ""
 		if config.titles:
-			print()
-			printer.printBoldCentered("Temperature")
-		print(str(self.current)+"°C/"+str(self.max) + "°C")
+			data = '\n' + Formater.boldCentered("Temperature") + "\n"
+		#print(str(self.current)+"°C/"+str(self.max) + "°C")
+		data += str(self.current) + "°C/" + str(self.max) + "°C\n"
 		if(config.TEMP_BAR):
-			printer.printBar(self.current*100/self.max)
+			data += Formater.createBar(self.current*100/self.max)
+		return data
 
 class Monitor:
 	def __init__(self):
@@ -90,24 +95,24 @@ class Monitor:
 		self.cpu.update()
 		self.mem.update()
 		self.temp.update()
-		time.sleep(config.updateInterval)
 	def printData(self):
-		time.sleep(config.updateInterval)
 		os.system("clear");
+		str = ""
 		if(config.CPU_INFO):
-			self.cpu.printData()
+			str += self.cpu.printData()
 		if(config.MEM_INFO):
-			self.mem.printData()
+			str += self.mem.printData()
 		if(config.TEMP_INFO):
-			self.temp.printData()
+			str += self.temp.printData()
+		print(str)
+		time.sleep(config.updateInterval)
 	def loop(self):
 		try:
 			while True:
 				self.update()
 				self.printData()
 		except KeyboardInterrupt:
-			print("\nGoodbye!")
-			pass
+			print(" Goodbye!")
 def main():
 	monitor = Monitor()
 	monitor.loop()
