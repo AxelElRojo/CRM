@@ -19,7 +19,8 @@ Things that CRM does **not** do:
 * Show each process.
 ## Sounds craptastic! How do I join?
 ___
-Before installing, make sure you have
+Before installing, make sure `~/.local/bin/` is in your PATH.
+
 To install it simply run this:
 ```shell
 git clone https://github.com/AxelElRojo/CRM/
